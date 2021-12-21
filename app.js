@@ -6,7 +6,7 @@ const port = process.env.PORT || 3000
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-
+app.use(cors());
 dbo.connectToServer(() => null)
 
 // View all listings
