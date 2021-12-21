@@ -4,9 +4,13 @@ const dbo = require("./conn.js")
 const app = express()
 const port = process.env.PORT || 3000
 
-dbo.connectToServer((er) => console.log(er))
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+dbo.connectToServer(() => null)
+
+// View all listings
+app.get('/listings', (req, res) => {
 
   const dbConnect = dbo.getDb();
 
@@ -20,10 +24,27 @@ app.get('/', (req, res) => {
         res.json(result);
       }
     });
-
-
-  // res.send('Hello World!')
 })
+
+// C
+app.post('/listings', (req, res) => {
+
+  const dbConnect = dbo.getDb();
+
+  console.log("Req is: " + req);
+
+  dbConnect
+    .collection("listings")
+    .insertOne(req.body, function (err, result) {
+      if (err) {
+        res.status(400).send("Error inserting listing!");
+      } else {
+        console.log("Added a new listing");
+        res.status(204).send();
+      }
+    })
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
