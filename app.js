@@ -2,7 +2,7 @@ const express = require('express')
 const {MongoClient} = require('mongodb');
 const dbo = require("./conn.js")
 const app = express()
-const port = 3000
+const port = process.env.port || 3000
 
 dbo.connectToServer((er) => console.log(er))
 
