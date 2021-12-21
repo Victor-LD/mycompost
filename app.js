@@ -1,5 +1,5 @@
 const express = require('express')
-const {MongoClient} = require('mongodb');
+const cors = require('cors')
 const dbo = require("./conn.js")
 const app = express()
 const port = process.env.PORT || 3000
